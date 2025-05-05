@@ -1,0 +1,3139 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Survey Data with Pandas and StatsModels &#8212; Survey Data with Pandas</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '01_simpson';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Survey Data with Pandas" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Survey Data with Pandas</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Survey Data with Pandas
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Survey Data with Pandas and StatsModels</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/SurveyDataPandas" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/01_simpson.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Survey Data with Pandas and StatsModels</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-variable">Target variable</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-series">Binary series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-tables">Pivot tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#better-colors">Better colors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groupby">Groupby</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-year-of-birth">Group by year of birth</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-the-cohorts">All the Cohorts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpsons-paradox">Simpson’s Paradox</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-weights">Sampling weights</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="survey-data-with-pandas-and-statsmodels">
+<h1>Survey Data with Pandas and StatsModels<a class="headerlink" href="#survey-data-with-pandas-and-statsmodels" title="Link to this heading">#</a></h1>
+<p>Tutorial for PyCon 2025</p>
+<p>Allen B. Downey</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/SurveyDataPandas/blob/main/01_simpson.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Set the random seed so we get the same results every time</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure Matplotlib</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">75</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.titlelocation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.spines.top&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.spines.bottom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.spines.left&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.spines.right&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download utils.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ProbablyOverthinkingIt/raw/book/notebooks/utils.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded utils.py
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decorate</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorate the current axes.</span>
+
+<span class="sd">    Call decorate with keyword arguments like</span>
+<span class="sd">    decorate(title=&#39;Title&#39;,</span>
+<span class="sd">             xlabel=&#39;x&#39;,</span>
+<span class="sd">             ylabel=&#39;y&#39;)</span>
+
+<span class="sd">    The keyword arguments can be any of the axis properties</span>
+<span class="sd">    https://matplotlib.org/api/axes_api.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">legend</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;legend&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">loc</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;loc&quot;</span><span class="p">,</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Pass options to Axis.set</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="c1"># Add a legend if there are any labeled elements</span>
+    <span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">handles</span> <span class="ow">and</span> <span class="n">legend</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">)</span>
+
+    <span class="c1"># Tight layout is generally a good idea</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>We will use data from the <a class="reference external" href="https://gss.norc.org/">General Social Survey</a> (GSS).
+The raw dataset is big, so I’ve prepared an extract, which the following cell downloads.
+The code to generate the extract is <a class="reference external" href="https://github.com/AllenDowney/GssExtract/blob/main/notebooks/02_make_extract-2022_4.ipynb">in this notebook</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This dataset is prepared in the GssExtract repository</span>
+
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/AllenDowney/GssExtract/raw/main/data/interim/&quot;</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;gss_extract_pacs_workshop.hdf&quot;</span>
+<span class="n">download</span><span class="p">(</span><span class="n">DATA_PATH</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;gss&quot;</span><span class="p">)</span>
+<span class="n">gss</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(72390, 29)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>attend</th>
+      <th>ballot</th>
+      <th>class</th>
+      <th>cohort</th>
+      <th>degree</th>
+      <th>educ</th>
+      <th>fair</th>
+      <th>fear</th>
+      <th>goodlife</th>
+      <th>...</th>
+      <th>region</th>
+      <th>relig</th>
+      <th>rincome</th>
+      <th>satfin</th>
+      <th>satjob</th>
+      <th>sex</th>
+      <th>srcbelt</th>
+      <th>trust</th>
+      <th>wtssall</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>24.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>1948.0</td>
+      <td>3.0</td>
+      <td>16.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>1.3339</td>
+      <td>1972</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>33.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1939.0</td>
+      <td>0.0</td>
+      <td>10.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.8893</td>
+      <td>1972</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>40.0</td>
+      <td>8.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1932.0</td>
+      <td>1.0</td>
+      <td>12.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>1.3339</td>
+      <td>1972</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>24.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1948.0</td>
+      <td>1.0</td>
+      <td>12.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>9</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>1.7786</td>
+      <td>1972</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>21.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>1951.0</td>
+      <td>1.0</td>
+      <td>12.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>1.7786</td>
+      <td>1972</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div></div></div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;attend&#39;, &#39;ballot&#39;, &#39;class&#39;, &#39;cohort&#39;, &#39;degree&#39;, &#39;educ&#39;, &#39;fair&#39;,
+       &#39;fear&#39;, &#39;goodlife&#39;, &#39;hapmar&#39;, &#39;happy&#39;, &#39;health&#39;, &#39;helpful&#39;, &#39;id&#39;,
+       &#39;life&#39;, &#39;partyid&#39;, &#39;polviews&#39;, &#39;race&#39;, &#39;region&#39;, &#39;relig&#39;, &#39;rincome&#39;,
+       &#39;satfin&#39;, &#39;satjob&#39;, &#39;sex&#39;, &#39;srcbelt&#39;, &#39;trust&#39;, &#39;wtssall&#39;, &#39;year&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id          0.000000
+year        0.000000
+wtssall     0.000000
+region      0.000000
+srcbelt     0.000718
+race        0.001796
+sex         0.002086
+degree      0.002942
+educ        0.004338
+cohort      0.005567
+relig       0.007087
+partyid     0.007294
+attend      0.009711
+age         0.010416
+class       0.048501
+satfin      0.063641
+happy       0.065106
+polviews    0.131620
+health      0.236552
+satjob      0.265064
+ballot      0.302183
+fear        0.365147
+life        0.386669
+rincome     0.402086
+trust       0.410982
+helpful     0.414090
+fair        0.415665
+hapmar      0.468241
+goodlife    0.631924
+dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">value_counts</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a series of values and the number of times they appear.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seq: sequence</span>
+
+<span class="sd">    returns: Pandas Series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/83c89e5a603958cf5bd11666ed654753a69305b9953aac0a1e0e48af4288e99e.png" src="_images/83c89e5a603958cf5bd11666ed654753a69305b9953aac0a1e0e48af4288e99e.png" />
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    71636.000000
+mean        44.985943
+std         17.201666
+min         18.000000
+25%         30.000000
+50%         43.000000
+75%         58.000000
+max         89.000000
+Name: age, dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d78b8005d00037fb3a0d0580e1846fd3e6d0d4db93c0711aa6d99fab879b5baa.png" src="_images/d78b8005d00037fb3a0d0580e1846fd3e6d0d4db93c0711aa6d99fab879b5baa.png" />
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;cohort&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    71987.000000
+mean      1991.908095
+std        561.717010
+min       1883.000000
+25%       1938.000000
+50%       1954.000000
+75%       1968.000000
+max       9999.000000
+Name: cohort, dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;cohort&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;cohort&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;cohort&#39;</span><span class="p">],</span> <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5b8a241bcf300a98efb59cf601923825638b6929f3ac54efa292be5de39b8fc5.png" src="_images/5b8a241bcf300a98efb59cf601923825638b6929f3ac54efa292be5de39b8fc5.png" />
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;cohort&#39;</span><span class="p">],</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">xtab</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of Respondents by Birth Cohort and Age Group&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Age Group&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Birth Cohort&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/35cfedeee017514097ba3ce7a5e82108e8f54168e24a35761bfa4e596445d0a0.png" src="_images/35cfedeee017514097ba3ce7a5e82108e8f54168e24a35761bfa4e596445d0a0.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="target-variable">
+<h2>Target variable<a class="headerlink" href="#target-variable" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://gssdataexplorer.norc.org/variables/434/vshow</span>
+
+<span class="n">varname</span> <span class="o">=</span> <span class="s1">&#39;happy&#39;</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Taken all together, how would you say things are these days--</span>
+<span class="s2">would you say that you are very happy, pretty happy, or not too happy?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Very happy&#39;</span><span class="p">,</span> <span class="s2">&quot;Happy&quot;</span><span class="p">,</span> <span class="s1">&#39;Not too happy&#39;</span><span class="p">]</span>
+
+<span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Percent saying &#39;very happy&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://gssdataexplorer.norc.org/variables/439/vshow</span>
+
+<span class="n">varname</span> <span class="o">=</span> <span class="s1">&#39;helpful&#39;</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Would you say that most of the time people try to be helpful,</span>
+<span class="s2">or that they are mostly just looking out for themselves?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Helpful&#39;</span><span class="p">,</span> <span class="s1">&#39;Look out</span><span class="se">\n</span><span class="s1">for themselves&#39;</span><span class="p">,</span> <span class="s1">&#39;Depends&#39;</span><span class="p">]</span>
+
+<span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Percent saying &#39;helpful&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://gssdataexplorer.norc.org/variables/440/vshow</span>
+
+<span class="n">varname</span> <span class="o">=</span> <span class="s1">&#39;fair&#39;</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Do you think most people would try to take advantage of you </span>
+<span class="s2">if they got a chance, or would they try to be fair?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Take advantage&#39;</span><span class="p">,</span> <span class="s1">&#39;Fair&#39;</span><span class="p">,</span> <span class="s1">&#39;Depends&#39;</span><span class="p">]</span>
+
+<span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Percent saying &#39;fair&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://gssdataexplorer.norc.org/variables/441/vshow</span>
+
+<span class="n">varname</span> <span class="o">=</span> <span class="s1">&#39;trust&#39;</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Generally speaking, would you say that most people can be trusted</span>
+<span class="s2">or that you can&#39;t be too careful in dealing with people?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Trusted&#39;</span><span class="p">,</span> <span class="s2">&quot;Can&#39;t be</span><span class="se">\n</span><span class="s2">too careful&quot;</span><span class="p">,</span> <span class="s1">&#39;Depends&#39;</span><span class="p">]</span>
+
+<span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Percent saying &#39;trusted&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">column</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span>
+<span class="n">column</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        1.0
+1        1.0
+2        2.0
+3        2.0
+4        NaN
+        ... 
+72385    2.0
+72386    2.0
+72387    NaN
+72388    NaN
+72389    1.0
+Name: trust, Length: 72390, dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">value_counts</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>trust
+1.0    15783
+2.0    24890
+3.0     1966
+NaN    29751
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">value_counts</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>trust
+1.0    0.370154
+2.0    0.583738
+3.0    0.046108
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;PMF&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e7ecb0b1a0b913644baceec9cbc787cc09a213ff84533c93d7789f05de31d24d.png" src="_images/e7ecb0b1a0b913644baceec9cbc787cc09a213ff84533c93d7789f05de31d24d.png" />
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pmf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">responses</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;PMF&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/895da4aa114da4e731b51eff6ac819a834589a39229356c4d57b0bce99baf90f.png" src="_images/895da4aa114da4e731b51eff6ac819a834589a39229356c4d57b0bce99baf90f.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="time-series">
+<h2>Time Series<a class="headerlink" href="#time-series" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">],</span> <span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">xtab</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>trust</th>
+      <th>1.0</th>
+      <th>2.0</th>
+      <th>3.0</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1972</th>
+      <td>0.463551</td>
+      <td>0.490343</td>
+      <td>0.046106</td>
+    </tr>
+    <tr>
+      <th>1973</th>
+      <td>0.483656</td>
+      <td>0.495664</td>
+      <td>0.020680</td>
+    </tr>
+    <tr>
+      <th>1975</th>
+      <td>0.391099</td>
+      <td>0.564396</td>
+      <td>0.044504</td>
+    </tr>
+    <tr>
+      <th>1976</th>
+      <td>0.455518</td>
+      <td>0.513043</td>
+      <td>0.031438</td>
+    </tr>
+    <tr>
+      <th>1978</th>
+      <td>0.396597</td>
+      <td>0.549738</td>
+      <td>0.053665</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss72</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;year == 1972&#39;</span><span class="p">)</span>
+<span class="n">gss72</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1613, 29)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf72</span> <span class="o">=</span> <span class="n">value_counts</span><span class="p">(</span><span class="n">gss72</span><span class="p">[</span><span class="n">varname</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pmf72</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>trust
+1.0    0.463551
+2.0    0.490343
+3.0    0.046106
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">time_series</span> <span class="o">=</span> <span class="n">xtab</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">time_series</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">time_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year of survey&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2fd9bee674bb0be6a8d82c1474c9e4ddb379e4e5a9d960fe8148cf652e720daa.png" src="_images/2fd9bee674bb0be6a8d82c1474c9e4ddb379e4e5a9d960fe8148cf652e720daa.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="smoothing">
+<h2>Smoothing<a class="headerlink" href="#smoothing" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">time_series</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">time_series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.nonparametric.smoothers_lowess</span><span class="w"> </span><span class="kn">import</span> <span class="n">lowess</span>
+
+<span class="n">smooth</span> <span class="o">=</span> <span class="n">lowess</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">smooth</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1972.        ,   46.44336435],
+       [1973.        ,   45.92462157],
+       [1975.        ,   44.89138608],
+       [1976.        ,   44.37506869],
+       [1978.        ,   43.34021376],
+       [1980.        ,   42.29915217],
+       [1983.        ,   40.72900771],
+       [1984.        ,   40.20411614],
+       [1986.        ,   39.20980822],
+       [1987.        ,   38.74261247],
+       [1988.        ,   38.30428354],
+       [1989.        ,   37.88875875],
+       [1990.        ,   37.50837346],
+       [1991.        ,   37.17928008],
+       [1993.        ,   36.65662513],
+       [1994.        ,   36.48118397],
+       [1996.        ,   36.03439737],
+       [1998.        ,   35.56517488],
+       [2000.        ,   35.12889869],
+       [2002.        ,   34.68957966],
+       [2004.        ,   34.26108802],
+       [2006.        ,   33.82664587],
+       [2008.        ,   33.22849732],
+       [2010.        ,   32.55719852],
+       [2012.        ,   31.85749202],
+       [2014.        ,   31.1425786 ],
+       [2016.        ,   30.41704044],
+       [2018.        ,   29.68254171],
+       [2022.        ,   28.17334206]])
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">index</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">smooth_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">smooth_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/452290539f10c28f25597f2951ba31440985798585d248a74adaaad4199f3e9d.png" src="_images/452290539f10c28f25597f2951ba31440985798585d248a74adaaad4199f3e9d.png" />
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use LOWESS to compute a smooth line.</span>
+
+<span class="sd">    series: pd.Series</span>
+
+<span class="sd">    returns: pd.Series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+    <span class="n">smooth</span> <span class="o">=</span> <span class="n">lowess</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frac</span><span class="p">)</span>
+    <span class="n">index</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">smooth</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">smooth_series</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">time_series</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">time_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">smooth_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;smoothed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year of survey&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6ca7290a2c3bd5d10d73d3a0b7923d400db29b2f225f48e00a70ee8af1ade892.png" src="_images/6ca7290a2c3bd5d10d73d3a0b7923d400db29b2f225f48e00a70ee8af1ade892.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="binary-series">
+<h2>Binary series<a class="headerlink" href="#binary-series" title="Link to this heading">#</a></h2>
+<p>It will be useful to convert the responses to a binary variable represented with 0s and 1s.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># tempting but wrong</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y
+False    56607
+True     15783
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">(),</span> <span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y
+0.0    26856
+1.0    15783
+NaN    29751
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="c1"># Reminder: this needs to be updated depending on the target variable</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y
+0.0    26856
+1.0    15783
+NaN    29751
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="pivot-tables">
+<h2>Pivot tables<a class="headerlink" href="#pivot-tables" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">polviews_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Liberal&#39;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Liberal&#39;</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Liberal&#39;</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Moderate&#39;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;Conservative&#39;</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;Conservative&#39;</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;Conservative&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">polviews_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews3&#39;</span><span class="p">],</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>polviews3
+Conservative    21580
+Liberal         17370
+Moderate        23912
+NaN              9528
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;polviews3&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>polviews3</th>
+      <th>Conservative</th>
+      <th>Liberal</th>
+      <th>Moderate</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1975</th>
+      <td>41.891892</td>
+      <td>39.192399</td>
+      <td>38.733706</td>
+    </tr>
+    <tr>
+      <th>1976</th>
+      <td>49.590164</td>
+      <td>45.961003</td>
+      <td>44.561404</td>
+    </tr>
+    <tr>
+      <th>1978</th>
+      <td>42.699115</td>
+      <td>43.262411</td>
+      <td>37.347295</td>
+    </tr>
+    <tr>
+      <th>1980</th>
+      <td>47.609562</td>
+      <td>45.896657</td>
+      <td>46.204620</td>
+    </tr>
+    <tr>
+      <th>1983</th>
+      <td>41.935484</td>
+      <td>31.914894</td>
+      <td>39.240506</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;.:&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d6b30712b6529135b5efe0387c45c43cc16817eae1ca2237e32826c839c0ebc5.png" src="_images/d6b30712b6529135b5efe0387c45c43cc16817eae1ca2237e32826c839c0ebc5.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="better-colors">
+<h2>Better colors<a class="headerlink" href="#better-colors" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">muted</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;muted&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">palplot</span><span class="p">(</span><span class="n">muted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/94854b22037f74f36a5e0187dc3f20d942ad047ddb5af82360b9aeb6559349f9.png" src="_images/94854b22037f74f36a5e0187dc3f20d942ad047ddb5af82360b9aeb6559349f9.png" />
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">color_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Conservative&#39;</span><span class="p">:</span> <span class="n">muted</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> 
+    <span class="s1">&#39;Moderate&#39;</span><span class="p">:</span> <span class="n">muted</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> 
+    <span class="s1">&#39;Liberal&#39;</span><span class="p">:</span> <span class="n">muted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Conservative&#39;</span><span class="p">,</span> <span class="s1">&#39;Liberal&#39;</span><span class="p">,</span> <span class="s1">&#39;Moderate&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+    <span class="n">series</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">color_map</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
+    <span class="n">series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">smooth</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+    <span class="n">smooth</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">group</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1e4e945c51e40da416639e450c2b11d22ef5b3567edb0055be363b87e806f60e.png" src="_images/1e4e945c51e40da416639e450c2b11d22ef5b3567edb0055be363b87e806f60e.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="groupby">
+<h2>Groupby<a class="headerlink" href="#groupby" title="Link to this heading">#</a></h2>
+<p>Now that we have <code class="docutils literal notranslate"><span class="pre">y</span></code> as a binary variable, we have another way to compute the time series.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">valid</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">time_series2</span> <span class="o">=</span> <span class="n">valid</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">time_series2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>And the pivot table</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table2</span> <span class="o">=</span> <span class="n">valid</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;polviews3&#39;</span><span class="p">])[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">table2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>There are pros and cons of each method.</p>
+</section>
+<section id="logistic-regression">
+<h2>Logistic regression<a class="headerlink" href="#logistic-regression" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">year_shift</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">gss</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">year_shift</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">subset</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ x + I(x**2)&#39;</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.593975
+x           -0.014409
+I(x ** 2)    0.000098
+dtype: float64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">year_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">2026</span><span class="p">)</span>
+
+<span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">year_range</span> <span class="o">-</span> <span class="n">year_shift</span><span class="p">))</span>
+
+<span class="n">pred_series</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pred_df</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">pred_series</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">year_range</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">time_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">pred_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year of survey&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/40715ac8640363b74f01322ff37d266607fb2b312fb69bdce9ca09e8af207728.png" src="_images/40715ac8640363b74f01322ff37d266607fb2b312fb69bdce9ca09e8af207728.png" />
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fit_model</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">x_shift</span><span class="p">):</span>
+    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ x + I(x**2)&#39;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_range</span> <span class="o">-</span> <span class="n">x_shift</span><span class="p">))</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pred_df</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">pred</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">x_range</span>
+    <span class="n">pred</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;model&#39;</span>
+
+    <span class="k">return</span> <span class="n">pred</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pred_series2</span> <span class="o">=</span> <span class="n">fit_model</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">year_range</span><span class="p">,</span> <span class="n">year_shift</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pred_series</span><span class="p">,</span> <span class="n">pred_series2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">subset</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;polviews3&#39;</span><span class="p">):</span>
+    <span class="n">pred_series</span> <span class="o">=</span> <span class="n">fit_model</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">year_range</span><span class="p">,</span> <span class="n">year_shift</span><span class="p">)</span>
+    <span class="n">pred_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_map</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+    
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1ff755a37e2b218560af8f91ebc976d92c955b66b26fcfc22403a6dd0dad5800.png" src="_images/1ff755a37e2b218560af8f91ebc976d92c955b66b26fcfc22403a6dd0dad5800.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="group-by-year-of-birth">
+<h2>Group by year of birth<a class="headerlink" href="#group-by-year-of-birth" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">round_into_bins</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">bin_width</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rounds values down to the bin they belong in.</span>
+
+<span class="sd">    series: pd.Series</span>
+<span class="sd">    bin_width: number, width of the bins</span>
+
+<span class="sd">    returns: Series of bin values (with NaN preserved)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">high</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">+</span> <span class="n">bin_width</span><span class="p">,</span> <span class="n">bin_width</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="n">indices</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">[</span><span class="n">series</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">gss</span><span class="p">[</span><span class="s2">&quot;cohort10&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">round_into_bins</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s2">&quot;cohort&quot;</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1880</span><span class="p">)</span>
+<span class="n">value_counts</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s2">&quot;cohort10&quot;</span><span class="p">],</span> <span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cohort10
+1880.0       45
+1890.0      501
+1900.0     1722
+1910.0     3616
+1920.0     5862
+1930.0     7115
+1940.0    10925
+1950.0    14273
+1960.0    11699
+1970.0     7681
+1980.0     5088
+1990.0     2563
+2000.0      545
+NaN         755
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cohort_df</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;cohort10 == 1940&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">])</span>
+<span class="n">cohort_df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6825, 33)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cohort_series</span> <span class="o">=</span> <span class="n">cohort_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">cohort_series</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;1940 cohort&#39;</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">x_range</span> <span class="o">=</span> <span class="n">cohort_series</span><span class="o">.</span><span class="n">index</span>
+<span class="n">pred_series</span> <span class="o">=</span> <span class="n">fit_model</span><span class="p">(</span><span class="n">cohort_df</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">year_shift</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cohort_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">pred_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3b946a585b45e0be26a39b730edd3fc9a3b5986eb6e639042ac59ec71914036a.png" src="_images/3b946a585b45e0be26a39b730edd3fc9a3b5986eb6e639042ac59ec71914036a.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="all-the-cohorts">
+<h2>All the Cohorts<a class="headerlink" href="#all-the-cohorts" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_cohort</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cohort</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">):</span>
+    <span class="n">cohort_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;cohort10 == @cohort&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">])</span>
+
+    <span class="n">cohort_series</span> <span class="o">=</span> <span class="n">cohort_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="n">year_range</span> <span class="o">=</span> <span class="n">cohort_series</span><span class="o">.</span><span class="n">index</span>
+
+    <span class="n">pred_series</span> <span class="o">=</span> <span class="n">fit_model</span><span class="p">(</span><span class="n">cohort_df</span><span class="p">,</span> <span class="n">year_range</span><span class="p">,</span> <span class="n">year_shift</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pred_series</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pred_series</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cohort</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="n">pred_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">cohort</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="mi">1920</span><span class="p">,</span> <span class="mi">2000</span>
+<span class="n">subset</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;@first &lt;= cohort &lt;= @last&quot;</span> <span class="p">)</span>
+<span class="n">subset</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(65390, 33)
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pred_all</span> <span class="o">=</span> <span class="n">fit_model</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">year_range</span><span class="p">,</span> <span class="n">year_shift</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cohorts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">&#39;cohort10&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="n">cohorts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000])
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Purples&#39;</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cohorts</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pred_all</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">cohort</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cohorts</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">plot_cohort</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="n">cohort</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+    
+<span class="n">decorate</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">question</span><span class="p">,</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/downey/miniconda3/envs/SurveyDataPandas/lib/python3.13/site-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn(&quot;Maximum Likelihood optimization failed to &quot;
+</pre></div>
+</div>
+<img alt="_images/ffbebe44b0cedcb61a7658129951aa063560ac23c6f1d2524d8a48badac9207d.png" src="_images/ffbebe44b0cedcb61a7658129951aa063560ac23c6f1d2524d8a48badac9207d.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="simpsons-paradox">
+<h2>Simpson’s Paradox<a class="headerlink" href="#simpsons-paradox" title="Link to this heading">#</a></h2>
+<p>Looking at birth cohorts, the composition of the population changes over time.
+The following figure shows the distribution of birth years for the respondents at the beginning of the survey in 1973, near the middle in 1990, and most recently in 2018.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xtab_cohort</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s2">&quot;cohort10&quot;</span><span class="p">],</span> <span class="n">gss</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+<span class="n">xtab_cohort</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>year</th>
+      <th>1972</th>
+      <th>1973</th>
+      <th>1974</th>
+      <th>1975</th>
+      <th>1976</th>
+      <th>1977</th>
+      <th>1978</th>
+      <th>1980</th>
+      <th>1982</th>
+      <th>1983</th>
+      <th>...</th>
+      <th>2004</th>
+      <th>2006</th>
+      <th>2008</th>
+      <th>2010</th>
+      <th>2012</th>
+      <th>2014</th>
+      <th>2016</th>
+      <th>2018</th>
+      <th>2021</th>
+      <th>2022</th>
+    </tr>
+    <tr>
+      <th>cohort10</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1880.0</th>
+      <td>0.003113</td>
+      <td>0.003995</td>
+      <td>0.008108</td>
+      <td>0.006739</td>
+      <td>0.004692</td>
+      <td>0.000000</td>
+      <td>0.003277</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1890.0</th>
+      <td>0.047945</td>
+      <td>0.038615</td>
+      <td>0.029730</td>
+      <td>0.037062</td>
+      <td>0.047587</td>
+      <td>0.027613</td>
+      <td>0.028834</td>
+      <td>0.017088</td>
+      <td>0.018929</td>
+      <td>0.005013</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1900.0</th>
+      <td>0.110212</td>
+      <td>0.099201</td>
+      <td>0.129730</td>
+      <td>0.082210</td>
+      <td>0.070375</td>
+      <td>0.091387</td>
+      <td>0.083224</td>
+      <td>0.059467</td>
+      <td>0.051379</td>
+      <td>0.038221</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1910.0</th>
+      <td>0.152553</td>
+      <td>0.158455</td>
+      <td>0.131081</td>
+      <td>0.130728</td>
+      <td>0.144772</td>
+      <td>0.125575</td>
+      <td>0.105505</td>
+      <td>0.124402</td>
+      <td>0.103840</td>
+      <td>0.093358</td>
+      <td>...</td>
+      <td>0.015714</td>
+      <td>0.007562</td>
+      <td>0.007944</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1920.0</th>
+      <td>0.224782</td>
+      <td>0.180426</td>
+      <td>0.193243</td>
+      <td>0.187332</td>
+      <td>0.159517</td>
+      <td>0.184747</td>
+      <td>0.152687</td>
+      <td>0.160629</td>
+      <td>0.149270</td>
+      <td>0.137218</td>
+      <td>...</td>
+      <td>0.038929</td>
+      <td>0.040036</td>
+      <td>0.038232</td>
+      <td>0.035294</td>
+      <td>0.025381</td>
+      <td>0.014235</td>
+      <td>0.009807</td>
+      <td>0.008576</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div></div>
+</details>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xtab_cohort</span><span class="p">[</span><span class="mi">1972</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;1972&quot;</span><span class="p">)</span>
+<span class="n">xtab_cohort</span><span class="p">[</span><span class="mi">1998</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;1998&quot;</span><span class="p">)</span>
+<span class="n">xtab_cohort</span><span class="p">[</span><span class="mi">2022</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;2022&quot;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Year of birth&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Fraction of sample&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b42fa5779eb09acc78349cb22aab965f7d09390c72d209d14cda6ba47a587914.png" src="_images/b42fa5779eb09acc78349cb22aab965f7d09390c72d209d14cda6ba47a587914.png" />
+</div>
+</details>
+</div>
+</section>
+<section id="sampling-weights">
+<h2>Sampling weights<a class="headerlink" href="#sampling-weights" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;wtssall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    72390.000000
+mean         1.303960
+std          0.889990
+min          0.113721
+25%          0.918400
+50%          1.062700
+75%          1.547800
+max         14.272462
+Name: wtssall, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)[</span><span class="s1">&#39;wtssall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1972</th>
+      <td>1613.0</td>
+      <td>1.146481</td>
+      <td>0.486191</td>
+      <td>0.444600</td>
+      <td>0.889300</td>
+      <td>0.889300</td>
+      <td>1.333900</td>
+      <td>3.557100</td>
+    </tr>
+    <tr>
+      <th>1973</th>
+      <td>1504.0</td>
+      <td>1.130645</td>
+      <td>0.417802</td>
+      <td>0.457200</td>
+      <td>0.914500</td>
+      <td>0.914500</td>
+      <td>1.371700</td>
+      <td>2.743500</td>
+    </tr>
+    <tr>
+      <th>1974</th>
+      <td>1484.0</td>
+      <td>1.160032</td>
+      <td>0.443681</td>
+      <td>0.466000</td>
+      <td>0.932000</td>
+      <td>0.932000</td>
+      <td>1.397900</td>
+      <td>3.727900</td>
+    </tr>
+    <tr>
+      <th>1975</th>
+      <td>1490.0</td>
+      <td>1.140258</td>
+      <td>0.466167</td>
+      <td>0.466000</td>
+      <td>0.932000</td>
+      <td>0.932000</td>
+      <td>1.397900</td>
+      <td>3.261900</td>
+    </tr>
+    <tr>
+      <th>1976</th>
+      <td>1499.0</td>
+      <td>1.147392</td>
+      <td>0.459938</td>
+      <td>0.485400</td>
+      <td>0.970900</td>
+      <td>0.970900</td>
+      <td>1.456300</td>
+      <td>3.398100</td>
+    </tr>
+    <tr>
+      <th>1977</th>
+      <td>1530.0</td>
+      <td>1.161231</td>
+      <td>0.458057</td>
+      <td>0.494100</td>
+      <td>0.988100</td>
+      <td>0.988100</td>
+      <td>1.482200</td>
+      <td>2.964400</td>
+    </tr>
+    <tr>
+      <th>1978</th>
+      <td>1532.0</td>
+      <td>1.148797</td>
+      <td>0.448502</td>
+      <td>0.506300</td>
+      <td>1.012700</td>
+      <td>1.012700</td>
+      <td>1.519000</td>
+      <td>3.038000</td>
+    </tr>
+    <tr>
+      <th>1980</th>
+      <td>1468.0</td>
+      <td>1.168663</td>
+      <td>0.486058</td>
+      <td>0.511200</td>
+      <td>1.022500</td>
+      <td>1.022500</td>
+      <td>1.533700</td>
+      <td>3.578700</td>
+    </tr>
+    <tr>
+      <th>1982</th>
+      <td>1860.0</td>
+      <td>1.189170</td>
+      <td>0.513264</td>
+      <td>0.506400</td>
+      <td>1.031900</td>
+      <td>1.031900</td>
+      <td>1.547800</td>
+      <td>4.127500</td>
+    </tr>
+    <tr>
+      <th>1983</th>
+      <td>1599.0</td>
+      <td>1.174535</td>
+      <td>0.489286</td>
+      <td>0.505800</td>
+      <td>1.011600</td>
+      <td>1.011600</td>
+      <td>1.517500</td>
+      <td>3.540700</td>
+    </tr>
+    <tr>
+      <th>1984</th>
+      <td>1473.0</td>
+      <td>1.163876</td>
+      <td>0.473032</td>
+      <td>0.516500</td>
+      <td>1.033100</td>
+      <td>1.033100</td>
+      <td>1.549600</td>
+      <td>3.615700</td>
+    </tr>
+    <tr>
+      <th>1985</th>
+      <td>1534.0</td>
+      <td>1.158889</td>
+      <td>0.463941</td>
+      <td>0.518100</td>
+      <td>1.036300</td>
+      <td>1.036300</td>
+      <td>1.554400</td>
+      <td>3.626900</td>
+    </tr>
+    <tr>
+      <th>1986</th>
+      <td>1470.0</td>
+      <td>1.164447</td>
+      <td>0.467082</td>
+      <td>0.503600</td>
+      <td>1.007200</td>
+      <td>1.007200</td>
+      <td>1.510800</td>
+      <td>3.021600</td>
+    </tr>
+    <tr>
+      <th>1987</th>
+      <td>1819.0</td>
+      <td>1.186371</td>
+      <td>0.499286</td>
+      <td>0.505200</td>
+      <td>1.010400</td>
+      <td>1.010400</td>
+      <td>1.515500</td>
+      <td>3.536200</td>
+    </tr>
+    <tr>
+      <th>1988</th>
+      <td>1481.0</td>
+      <td>1.163860</td>
+      <td>0.463531</td>
+      <td>0.531300</td>
+      <td>1.062700</td>
+      <td>1.062700</td>
+      <td>1.062700</td>
+      <td>3.719400</td>
+    </tr>
+    <tr>
+      <th>1989</th>
+      <td>1537.0</td>
+      <td>1.184300</td>
+      <td>0.504330</td>
+      <td>0.510700</td>
+      <td>1.021500</td>
+      <td>1.021500</td>
+      <td>1.532200</td>
+      <td>3.575100</td>
+    </tr>
+    <tr>
+      <th>1990</th>
+      <td>1372.0</td>
+      <td>1.161439</td>
+      <td>0.489095</td>
+      <td>0.531300</td>
+      <td>1.062700</td>
+      <td>1.062700</td>
+      <td>1.062700</td>
+      <td>3.188100</td>
+    </tr>
+    <tr>
+      <th>1991</th>
+      <td>1517.0</td>
+      <td>1.174147</td>
+      <td>0.478842</td>
+      <td>0.531100</td>
+      <td>1.062100</td>
+      <td>1.062100</td>
+      <td>1.593200</td>
+      <td>3.717500</td>
+    </tr>
+    <tr>
+      <th>1993</th>
+      <td>1606.0</td>
+      <td>1.169310</td>
+      <td>0.448682</td>
+      <td>0.528500</td>
+      <td>1.057100</td>
+      <td>1.057100</td>
+      <td>1.585600</td>
+      <td>3.699800</td>
+    </tr>
+    <tr>
+      <th>1994</th>
+      <td>2992.0</td>
+      <td>1.166058</td>
+      <td>0.457253</td>
+      <td>0.541200</td>
+      <td>1.082500</td>
+      <td>1.082500</td>
+      <td>1.082500</td>
+      <td>3.247500</td>
+    </tr>
+    <tr>
+      <th>1996</th>
+      <td>2904.0</td>
+      <td>1.181024</td>
+      <td>0.479229</td>
+      <td>0.543200</td>
+      <td>1.086400</td>
+      <td>1.086400</td>
+      <td>1.086400</td>
+      <td>3.259100</td>
+    </tr>
+    <tr>
+      <th>1998</th>
+      <td>2832.0</td>
+      <td>1.177809</td>
+      <td>0.462729</td>
+      <td>0.550100</td>
+      <td>1.100100</td>
+      <td>1.100100</td>
+      <td>1.100100</td>
+      <td>3.850400</td>
+    </tr>
+    <tr>
+      <th>2000</th>
+      <td>2817.0</td>
+      <td>1.165950</td>
+      <td>0.453726</td>
+      <td>0.549300</td>
+      <td>1.098500</td>
+      <td>1.098500</td>
+      <td>1.098500</td>
+      <td>3.295600</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>2765.0</td>
+      <td>1.198505</td>
+      <td>0.507470</td>
+      <td>0.557800</td>
+      <td>1.115600</td>
+      <td>1.115600</td>
+      <td>1.115600</td>
+      <td>2.788900</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>2812.0</td>
+      <td>1.299424</td>
+      <td>0.762699</td>
+      <td>0.459200</td>
+      <td>0.918400</td>
+      <td>0.961700</td>
+      <td>1.836800</td>
+      <td>6.428700</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>4510.0</td>
+      <td>1.360152</td>
+      <td>0.841060</td>
+      <td>0.429700</td>
+      <td>0.859300</td>
+      <td>0.954800</td>
+      <td>1.909600</td>
+      <td>5.728800</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>2023.0</td>
+      <td>1.425750</td>
+      <td>0.911863</td>
+      <td>0.437745</td>
+      <td>0.875490</td>
+      <td>1.067670</td>
+      <td>2.135340</td>
+      <td>6.406021</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>2044.0</td>
+      <td>1.313222</td>
+      <td>0.726111</td>
+      <td>0.463128</td>
+      <td>0.926255</td>
+      <td>0.926255</td>
+      <td>1.684101</td>
+      <td>4.210252</td>
+    </tr>
+    <tr>
+      <th>2012</th>
+      <td>1974.0</td>
+      <td>1.366495</td>
+      <td>0.884637</td>
+      <td>0.411898</td>
+      <td>0.823796</td>
+      <td>1.235694</td>
+      <td>1.747975</td>
+      <td>8.739876</td>
+    </tr>
+    <tr>
+      <th>2014</th>
+      <td>2538.0</td>
+      <td>1.273430</td>
+      <td>0.674193</td>
+      <td>0.448002</td>
+      <td>0.896003</td>
+      <td>1.344005</td>
+      <td>1.380591</td>
+      <td>5.376020</td>
+    </tr>
+    <tr>
+      <th>2016</th>
+      <td>2867.0</td>
+      <td>1.227412</td>
+      <td>0.607020</td>
+      <td>0.391825</td>
+      <td>0.956994</td>
+      <td>0.956994</td>
+      <td>1.564363</td>
+      <td>4.306471</td>
+    </tr>
+    <tr>
+      <th>2018</th>
+      <td>2348.0</td>
+      <td>1.382192</td>
+      <td>0.936160</td>
+      <td>0.471499</td>
+      <td>0.942997</td>
+      <td>0.942997</td>
+      <td>1.414496</td>
+      <td>5.897420</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>4032.0</td>
+      <td>1.551637</td>
+      <td>1.175611</td>
+      <td>0.227357</td>
+      <td>0.790829</td>
+      <td>1.195842</td>
+      <td>1.869697</td>
+      <td>7.557038</td>
+    </tr>
+    <tr>
+      <th>2022</th>
+      <td>3544.0</td>
+      <td>2.551821</td>
+      <td>2.489079</td>
+      <td>0.113721</td>
+      <td>0.714314</td>
+      <td>1.781121</td>
+      <td>3.529911</td>
+      <td>14.272462</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">resample_by_year</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;wtssall&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resample rows within each year using weighted sampling.</span>
+
+<span class="sd">    df: DataFrame</span>
+<span class="sd">    column: string name of weight variable</span>
+
+<span class="sd">    returns: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+               <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped</span><span class="p">]</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sample</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">resample_by_year</span><span class="p">(</span><span class="n">gss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.3701540842890312)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.3667616422999673)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weighted_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">valid</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="n">valid</span><span class="p">[</span><span class="s1">&#39;wtssall&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Probably Overthinking It</p>
+<p>Copyright 2022 Allen Downey</p>
+<p>The code in this notebook and <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> is under the <a class="reference external" href="https://mit-license.org/">MIT license</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Survey Data with Pandas</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-variable">Target variable</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series">Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-series">Binary series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-tables">Pivot tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#better-colors">Better colors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groupby">Groupby</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-year-of-birth">Group by year of birth</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-the-cohorts">All the Cohorts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpsons-paradox">Simpson’s Paradox</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-weights">Sampling weights</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
