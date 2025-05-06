@@ -63,7 +63,9 @@ If you prefer to run the notebooks on your local machine, follow these steps:
 
 4. **Open the notebook**:
    - Navigate to the `notebooks` directory
-   - Open `01_simpson.ipynb`
+   - Open `test_notebook.ipynb`
+
+If the code in `test_notebook.ipynb` runs with no errors, your setup is ready to go!
 
 
 
