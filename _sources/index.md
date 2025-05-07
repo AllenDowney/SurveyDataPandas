@@ -1,17 +1,14 @@
 # Survey Data with Pandas
 
+This is the landing page for a tutorial at PyCon US 2025.
+
+[The slides are here](https://docs.google.com/presentation/d/e/2PACX-1vTNdX7EizUOSVLxl7yWcR627FWnnPXcydIw6_eB6mXNlBlP4AjxG0YZNvFzLzL8Muuj-tJGZI3ID551/pub)
+
+Links to the notebooks and setup instructions are below.
+
 **Abstract**
 
 Survey data analysis is a cornerstone of data science, whether you're analyzing customer feedback, tracking election polls, or studying social trends. This tutorial introduces powerful tools from Pandas and StatsModels for extracting meaningful insights from survey data. Using real-world examples from the General Social Survey (GSS), we'll explore how political beliefs have evolved in the United States over the past 50 years. Through hands-on exercises, you'll master essential data science workflows: from data loading and validation to exploration, visualization, modeling, and effective communication of results.
-
-**What You'll Learn**
-
-In this tutorial, you'll develop practical skills in:
-- Loading and cleaning survey data using Pandas
-- Exploring relationships between variables
-- Creating informative visualizations
-- Identifying and analyzing Simpson's Paradox
-- Drawing valid conclusions from complex data
 
 **Prerequisites**
 
@@ -55,6 +52,7 @@ If you prefer to run the notebooks on your local machine, follow these steps:
    # Install required packages
    make requirements
    ```
+If you use another environment manager, you can look in `requirements.txt` to see what packages you need.
 
 3. **Start Jupyter**:
    ```bash
@@ -66,8 +64,4 @@ If you prefer to run the notebooks on your local machine, follow these steps:
    - Open `test_notebook.ipynb`
 
 If the code in `test_notebook.ipynb` runs with no errors, your setup is ready to go!
-
-
-
-
 
