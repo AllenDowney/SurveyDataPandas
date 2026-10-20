@@ -18,6 +18,7 @@ The notebook downloads its data, `gss_extract_pacs_workshop.hdf`, from the GssEx
 
 - `pycon-2025`: the version given at PyCon US 2025 (not recorded).
 - `pre-refresh-2026`: the state before the 2026 refresh.
+- `2026-refresh`: the refreshed version.
 
 ## Testing
 

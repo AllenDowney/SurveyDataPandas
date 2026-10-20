@@ -8,7 +8,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 ## Task 1: Refresh
 
-**Status:** In progress (2026-10-20)
+**Status:** DONE (2026-10-20), except Allen's Search Console submission and the SurveyDataPyMC back-link
 
 **Context:** SurveyDataPandas is a "current" workshop (GreenTeaPress Task 24). The guide is the "Refresh checklist" in `~/GreenTeaPress/plans/workshops.md`; BayesMadeSimple and CompStats are the worked examples. Given at PyCon US 2025 (May 15, 2025); not recorded. 0 stars; last content change 2025-05-06. Companion workshop: SurveyDataPyMC (same GSS data and audience, ODSC East 2025); the two should link to each other.
 
@@ -25,6 +25,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] `environment.yml` (Python 3.12, conda-forge, Jupyter, the libraries, pytest, nbmake, the site build tools), `requirements.txt` (unpinned: numpy, pandas, matplotlib, seaborn, statsmodels, tables; scipy and jupyter dropped), `requirements-dev.txt` (adds jupyter, pytest, nbmake; black and flake8 dropped) (2026-10-20)
 - [x] First code cell: nothing to install. Colab has every library (backend-info, 2026-10-03: pandas 2.2.3, NumPy 2.1.3, Matplotlib 3.10, seaborn 0.13.2, statsmodels 0.15.0, tables 3.10.2). The notebooks already download the data if missing
 - [x] Breakage and warnings: none. The three notebooks run in scratch copies with Deprecation/Future/PendingDeprecation/User/Runtime warnings as errors. Outputs match the 2025 ones, except `gss.columns` shows `dtype='str'` (pandas 3) and a weighted resample (random). One `ConvergenceWarning` (it was there in 2025 too; Content issues)
+- [x] NumPy 2 scalar reprs (`np.float64(0.36)`): `np.set_printoptions(legacy='1.25')` in the import cell of `01_simpson` and `test_notebook` (Allen, 2026-10-20); solution version re-executed
 - [x] Data URL: kept (Decisions)
 - [x] Running instructions in `jb/index.md`: pip or mamba instead of the Makefile; the Colab links above them were already there. `Makefile` kept, updated (Decisions): `create_environment` uses `environment.yml`, `requirements` installs `requirements-dev.txt`, `tests` runs all three notebooks (3 passed, 15 s)
 
@@ -35,7 +36,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **3. Colab**
 - [x] Colab cell after the title (2026-10-20): the solution version opens itself and links to the version with blanks (house wording, as in BayesMadeSimple); `remove_soln.py` now rewrites that cell so the student version opens itself; `test_notebook` got one. README links come with the step 5 rewrite; the site pages should open the version with blanks (step 6, `prep_notebooks.py`)
-- [ ] Allen runs one notebook on Colab end to end (needs the push first: Colab opens the notebooks from GitHub)
+- [x] Allen ran `soln/01_simpson.ipynb` on Colab end to end (2026-10-20)
 
 **4. Text**
 - [x] Typos: none found (codespell's hits are all in embedded images; markdown, comments and docstrings read) (2026-10-20)
@@ -56,7 +57,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Hub entry and description unchanged (still fit); topics `jupyter-book`, `statsmodels`, `general-social-survey` added (Allen)
 
 **7. Close**
-- [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
+- [x] Tag `2026-refresh` (pushed); noted in GreenTeaPress Task 24 (2026-10-20)
 
 ### Inventory (2026-10-20)
 
@@ -101,6 +102,8 @@ Allen, 2026-10-20:
 - Title subtitle like CompStats; text license CC BY-NC-SA 4.0, copyright 2025–2026; `test_notebook` title cell split.
 - GSS Data Explorer links: keep them; Allen checks one in a browser (the host is up, but sends an incomplete certificate chain, so curl fails).
 - `happy` label "Happy" → "Pretty happy".
+- GSS Data Explorer links work in a browser; kept.
+- NumPy legacy print options in the notebooks (and in the checklist, for the other refreshes).
 - README: beginner, about 3 hours.
 - Pushed the 7 commits (2026-10-20); CI passed.
 - Site: rebuild from the BayesMadeSimple template; test build before publishing.
@@ -113,5 +116,5 @@ Allen, 2026-10-20:
 1. Resolved 2026-10-20 (Decisions): the title cell's three-line subtitle; copyright 2025 and MIT only.
 2. The slides (Google Slides) are linked only from the site; check they match the notebook.
 3. Resolved 2026-10-20 (explained in the text; Decisions). "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.
-4. The four "Target variable" cells link `https://gssdataexplorer.norc.org/variables/<n>/vshow` (434 `happy`, 439 `helpful`, 440 `fair`, 441 `trust`). The site is up, but it is a JavaScript app, so I couldn't check that these pages still show the variables. **Allen:** open one in a browser; if it doesn't, replace the four with the Data Explorer home (Allen, 2026-10-20).
+4. Resolved 2026-10-20 (Allen: the links work in a browser; kept). The four "Target variable" cells link `https://gssdataexplorer.norc.org/variables/<n>/vshow` (434 `happy`, 439 `helpful`, 440 `fair`, 441 `trust`). The site is up, but it is a JavaScript app, so I couldn't check that these pages still show the variables. **Allen:** open one in a browser; if it doesn't, replace the four with the Data Explorer home (Allen, 2026-10-20).
 5. Resolved 2026-10-20 (now "Pretty happy"). `happy`: the `responses` labels are "Very happy", "Happy", "Not too happy", but the GSS answer (and the `question` text) is "pretty happy".
