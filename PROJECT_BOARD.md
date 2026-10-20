@@ -34,8 +34,8 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Status badge in the README
 
 **3. Colab**
-- [ ] Colab cell after the title of each notebook. The solution and student versions share one cell, which opens the student version; the solution version should open itself and link to the student version. `test_notebook` has none
-- [ ] Allen runs one notebook on Colab end to end
+- [x] Colab cell after the title (2026-10-20): the solution version opens itself and links to the version with blanks (house wording, as in BayesMadeSimple); `remove_soln.py` now rewrites that cell so the student version opens itself; `test_notebook` got one. README links come with the step 5 rewrite; the site pages should open the version with blanks (step 6, `prep_notebooks.py`)
+- [ ] Allen runs one notebook on Colab end to end (needs the push first: Colab opens the notebooks from GitHub)
 
 **4. Text**
 - [ ] Typos and broken links

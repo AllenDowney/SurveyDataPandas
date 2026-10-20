@@ -32,4 +32,4 @@ The target environment is Google Colab's current Python and libraries.
 ## Conventions
 
 - Don't change the substance of the text; list content questions under "Content issues" on the board for Allen to decide.
-- Keep the student and solution versions in sync by regenerating the student version.
+- Keep the student and solution versions in sync by regenerating the student version: `cp soln/01_simpson.ipynb notebooks/ && python soln/remove_soln.py notebooks/01_simpson.ipynb` (`soln/build.sh` does the same, then commits and pushes).
