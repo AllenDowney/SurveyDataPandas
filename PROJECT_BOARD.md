@@ -8,7 +8,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 ## Task 1: Refresh
 
-**Status:** DONE (2026-10-20), except Allen's Search Console submission and the SurveyDataPyMC back-link
+**Status:** DONE (2026-10-20)
 
 **Context:** SurveyDataPandas is a "current" workshop (GreenTeaPress Task 24). The guide is the "Refresh checklist" in `~/GreenTeaPress/plans/workshops.md`; BayesMadeSimple and CompStats are the worked examples. Given at PyCon US 2025 (May 15, 2025); not recorded. 0 stars; last content change 2025-05-06. Companion workshop: SurveyDataPyMC (same GSS data and audience, ODSC East 2025); the two should link to each other.
 
@@ -51,9 +51,9 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] SEO checklist in a test build (scratch copy): sitemap lists only `index.html` and `01_simpson.html`; each page has one description, one `og:description`, `rel="canonical"`; landing H1 ("Survey Data with Pandas: A Tutorial in Python") differs from the site title; counter in the footer; no stray SurveyDataPyMC pages
 - [x] Allen approved the two descriptions (2026-10-20)
 - [x] Published (2026-10-20) from a clean `jb/_build/`: the stray SurveyDataPyMC pages are gone (`04_hierarchical.html` now 404); `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (pushed); noted in GreenTeaPress Tasks 22 and 24
-- [ ] Allen submits the sitemap in Search Console
+- [x] Allen submitted the sitemap in Search Console (2026-10-20)
 - [x] Cross-link this workshop to SurveyDataPyMC: README and site (intro and next steps)
-- [ ] Cross-link SurveyDataPyMC back to this workshop: left for that repo's refresh (Allen), since it has uncommitted edits (noted in GreenTeaPress Task 24)
+- [x] Cross-link SurveyDataPyMC back to this workshop: Allen is doing it in SurveyDataPyMC (2026-10-20)
 - [x] Hub entry and description unchanged (still fit); topics `jupyter-book`, `statsmodels`, `general-social-survey` added (Allen)
 
 **7. Close**
