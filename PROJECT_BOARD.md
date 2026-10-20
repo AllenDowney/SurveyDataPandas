@@ -29,9 +29,9 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Running instructions in `jb/index.md`: pip or mamba instead of the Makefile; the Colab links above them were already there. `Makefile` kept, updated (Decisions): `create_environment` uses `environment.yml`, `requirements` installs `requirements-dev.txt`, `tests` runs all three notebooks (3 passed, 15 s)
 
 **2. Tests and CI**
-- [ ] `pytest --nbmake` on the notebooks
-- [ ] `.github/workflows/tests.yml`
-- [ ] Status badge in the README
+- [x] `make tests` = `pytest --nbmake` on all three notebooks (the student version runs too: its blanks are missing cells, not failing code). 3 passed, about 15 s, in the mamba env and in a fresh pip venv from `requirements-dev.txt` (2026-10-20)
+- [x] `.github/workflows/tests.yml` (push to main, PR, monthly, manual; Python 3.12; pip; 20-minute timeout; checkout@v5, setup-python@v6). Not pushed yet (Allen); watch the first run after the push
+- [x] Status badge in the README
 
 **3. Colab**
 - [ ] Colab cell after the title of each notebook (the solution notebook has one; the student notebook and `test_notebook` don't)
@@ -91,6 +91,8 @@ Allen, 2026-10-20:
 - The stray SurveyDataPyMC pages on `gh-pages` come off at the step 6 republish, not before.
 - Data: keep downloading from `GssExtract/raw/main/data/interim/` (SurveyDataPyMC uses the same URL).
 - Makefile: keep it, updated for `environment.yml`.
+- 2000 cohort warning: leave the code, explain it in the text. Added to the "All the Cohorts" exercise cell: the cohort is in only two surveys, not enough to fit a quadratic, so the optimizer might not converge; the predictions for those years are still good. Student version regenerated with `remove_soln.py`.
+- Commits stay local for now (no push before step 2).
 
 ### Content issues
 
@@ -98,4 +100,4 @@ Allen, 2026-10-20:
 
 1. The title cell has a three-line subtitle ("Tutorial for PyCon 2025", "Allen B. Downey"); the layout rule allows one line. Copyright says 2025 and MIT only (new rule: code MIT, text CC).
 2. The slides (Google Slides) are linked only from the site; check they match the notebook.
-3. "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.
+3. Resolved 2026-10-20 (explained in the text; Decisions). "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.
