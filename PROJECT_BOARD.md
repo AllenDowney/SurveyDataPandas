@@ -48,11 +48,12 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 **6. Site and visibility**
 - [x] `jb/` from the BayesMadeSimple template (2026-10-20): `build.sh [publish]` (publishes only with `publish`), `prep_notebooks.py` (copies `../soln/01_simpson.ipynb` in, keeps the `hide-cell` tags on the solutions as before, writes the page description), `_config.yml` (executes the notebook, `main` branch, sitemap, opengraph, page-view counter, *Think Stats* 3e cover as the social image), `index.md` mirrors the README. The notebook's own Colab cell links to the version with blanks
 - [x] SEO checklist in a test build (scratch copy): sitemap lists only `index.html` and `01_simpson.html`; each page has one description, one `og:description`, `rel="canonical"`; landing H1 ("Survey Data with Pandas: A Tutorial in Python") differs from the site title; counter in the footer; no stray SurveyDataPyMC pages
-- [ ] Allen reviews the two descriptions (`jb/index.md` front matter, `jb/prep_notebooks.py`)
-- [ ] Publish: `./build.sh publish` from a clean `jb/_build/` (ghp-import replaces the whole `gh-pages` tree, which removes the stray SurveyDataPyMC pages); Pages already serves `gh-pages`; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt`; Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] Allen approved the two descriptions (2026-10-20)
+- [x] Published (2026-10-20) from a clean `jb/_build/`: the stray SurveyDataPyMC pages are gone (`04_hierarchical.html` now 404); `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (pushed); noted in GreenTeaPress Tasks 22 and 24
+- [ ] Allen submits the sitemap in Search Console
 - [x] Cross-link this workshop to SurveyDataPyMC: README and site (intro and next steps)
-- [ ] Cross-link SurveyDataPyMC back to this workshop: left for that repo's refresh (Allen), since it has uncommitted edits; note in GreenTeaPress Task 24
-- [ ] Hub entry, repo description and topics (add `jupyter-book`)
+- [ ] Cross-link SurveyDataPyMC back to this workshop: left for that repo's refresh (Allen), since it has uncommitted edits (noted in GreenTeaPress Task 24)
+- [x] Hub entry and description unchanged (still fit); topics `jupyter-book`, `statsmodels`, `general-social-survey` added (Allen)
 
 **7. Close**
 - [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
