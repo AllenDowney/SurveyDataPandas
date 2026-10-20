@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Downloaded data
+*.hdf
+
+# Jupyter Book build and the notebooks copied in by build.sh
+jb/_build/
+jb/0*.ipynb
