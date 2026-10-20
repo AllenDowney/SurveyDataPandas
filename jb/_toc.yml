@@ -1,4 +1,4 @@
 format: jb-book
 root: index
 chapters:
-- file: 01_simpson.ipynb
+- file: 01_simpson

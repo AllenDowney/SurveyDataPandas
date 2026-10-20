@@ -1,65 +1,33 @@
+"""Copy the solution notebook into jb/ and prepare it for the book.
+
+For each ../soln/NN_name.ipynb, writes NN_name.ipynb here:
+- code cells that start with "# Solution" get the hide-cell tag,
+  so the solutions are collapsed on the page;
+- the page description goes in the notebook metadata (see GreenTeaPress plans/seo.md).
 """
-This script prepares notebooks for JupyterBook by adding appropriate tags to hide solution cells.
-It processes all notebooks in the current directory that start with 0
 
-"""
+import nbformat
 
-import nbformat as nbf
-from glob import glob
-
-
-def process_cell(cell):
-    """
-    Process a single notebook cell, adding 'hide-cell' tag to solution cells.
-    
-    Args:
-        cell: A notebook cell dictionary containing cell metadata and content
-    
-    Returns:
-        None (modifies cell in place)
-    """
-    # Get existing tags from cell metadata, or empty list if none exist
-    cell_tags = cell.get('metadata', {}).get('tags', [])
-
-    # If this is a code cell that starts with '# Solution',
-    # add the 'hide-cell' tag to hide it in the JupyterBook
-    if cell['cell_type'] == 'code':
-        source = cell['source']
-        if source.startswith('# Solution'):
-            tag = 'hide-cell'
-            if tag not in cell_tags:
-                cell_tags.append('hide-cell')
-
-    # Update the cell's metadata with the new tags
-    if len(cell_tags) > 0:
-        cell['metadata']['tags'] = cell_tags
+DESCRIPTIONS = {
+    '01_simpson': "Analyze General Social Survey data with pandas and StatsModels: crosstabs, "
+                  "LOWESS, pivot tables, logistic regression, cohorts, and Simpson's paradox.",
+}
 
 
-def process_notebook(path):
-    """
-    Process an entire notebook file, adding tags to all cells.
-    
-    Args:
-        path: Path to the notebook file
-    
-    Returns:
-        None (modifies notebook file in place)
-    """
-    # Read the notebook
-    ntbk = nbf.read(path, nbf.NO_CONVERT)
+def prepare(name, description):
+    nb = nbformat.read(f'../soln/{name}.ipynb', 4)
 
-    # Process each cell in the notebook
-    for cell in ntbk.cells:
-        process_cell(cell)
+    for cell in nb.cells:
+        if cell.cell_type == 'code' and cell.source.startswith('# Solution'):
+            tags = cell.metadata.setdefault('tags', [])
+            if 'hide-cell' not in tags:
+                tags.append('hide-cell')
 
-    # Write the modified notebook back to the same file
-    nbf.write(ntbk, path)
+    nb.metadata['myst'] = {'html_meta': {'description': description}}
+    nb.metadata['og:description'] = description
+    nbformat.write(nb, f'{name}.ipynb')
+    print(f'{name} ({len(description)} characters)')
 
 
-# Find all notebooks that start with 0
-paths = glob("0*.ipynb")
-
-# Process each notebook in order
-for path in sorted(paths):
-    print('Preparing notebook:', path)
-    process_notebook(path)
+for name, description in DESCRIPTIONS.items():
+    prepare(name, description)

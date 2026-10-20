@@ -30,7 +30,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **2. Tests and CI**
 - [x] `make tests` = `pytest --nbmake` on all three notebooks (the student version runs too: its blanks are missing cells, not failing code). 3 passed, about 15 s, in the mamba env and in a fresh pip venv from `requirements-dev.txt` (2026-10-20)
-- [x] `.github/workflows/tests.yml` (push to main, PR, monthly, manual; Python 3.12; pip; 20-minute timeout; checkout@v5, setup-python@v6). Not pushed yet (Allen); watch the first run after the push
+- [x] `.github/workflows/tests.yml` (push to main, PR, monthly, manual; Python 3.12; pip; 20-minute timeout; checkout@v5, setup-python@v6). First run passed: https://github.com/AllenDowney/SurveyDataPandas/actions/runs/39478513062
 - [x] Status badge in the README
 
 **3. Colab**
@@ -46,11 +46,13 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] README rewritten (2026-10-20): badge, author, abstract (from `jb/index.md`, pandas lowercase), companion link, level (beginner) and length (3 hours, Allen), outline, notebook table with Colab links (setup check, exercises, solutions), slides, data, recordings (none; tag `pycon-2025`), running instructions, next steps (SurveyDataPyMC, PoliticalAlignmentCaseStudy, *Think Stats*, the *Probably Overthinking It* notebooks, the hub), license. `LICENSE` file (MIT, 2025)
 
 **6. Site and visibility**
-- [ ] Rebuild the existing site (Jupyter Book in `jb/`, `gh-pages`), with `prep_notebooks.py` from the template
-- [ ] Remove the SurveyDataPyMC pages from the published site (Inventory)
-- [ ] SEO checklist
-- [ ] Publish; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt`; Search Console; GreenTeaPress Task 22
-- [ ] Cross-links with SurveyDataPyMC (README and site, both ways); hub entry; repo description and topics
+- [x] `jb/` from the BayesMadeSimple template (2026-10-20): `build.sh [publish]` (publishes only with `publish`), `prep_notebooks.py` (copies `../soln/01_simpson.ipynb` in, keeps the `hide-cell` tags on the solutions as before, writes the page description), `_config.yml` (executes the notebook, `main` branch, sitemap, opengraph, page-view counter, *Think Stats* 3e cover as the social image), `index.md` mirrors the README. The notebook's own Colab cell links to the version with blanks
+- [x] SEO checklist in a test build (scratch copy): sitemap lists only `index.html` and `01_simpson.html`; each page has one description, one `og:description`, `rel="canonical"`; landing H1 ("Survey Data with Pandas: A Tutorial in Python") differs from the site title; counter in the footer; no stray SurveyDataPyMC pages
+- [ ] Allen reviews the two descriptions (`jb/index.md` front matter, `jb/prep_notebooks.py`)
+- [ ] Publish: `./build.sh publish` from a clean `jb/_build/` (ghp-import replaces the whole `gh-pages` tree, which removes the stray SurveyDataPyMC pages); Pages already serves `gh-pages`; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt`; Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] Cross-link this workshop to SurveyDataPyMC: README and site (intro and next steps)
+- [ ] Cross-link SurveyDataPyMC back to this workshop: left for that repo's refresh (Allen), since it has uncommitted edits; note in GreenTeaPress Task 24
+- [ ] Hub entry, repo description and topics (add `jupyter-book`)
 
 **7. Close**
 - [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
@@ -99,6 +101,9 @@ Allen, 2026-10-20:
 - GSS Data Explorer links: keep them; Allen checks one in a browser (the host is up, but sends an incomplete certificate chain, so curl fails).
 - `happy` label "Happy" → "Pretty happy".
 - README: beginner, about 3 hours.
+- Pushed the 7 commits (2026-10-20); CI passed.
+- Site: rebuild from the BayesMadeSimple template; test build before publishing.
+- The SurveyDataPyMC → SurveyDataPandas link waits for SurveyDataPyMC's own refresh.
 
 ### Content issues
 
