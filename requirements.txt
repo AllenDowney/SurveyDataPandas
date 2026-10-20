@@ -1,8 +1,6 @@
-jupyter
 numpy
-matplotlib
 pandas
+matplotlib
 seaborn
-scipy
 statsmodels
 tables

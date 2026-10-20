@@ -1,0 +1,20 @@
+name: SurveyDataPandas
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyter
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - statsmodels
+  - pytables
+  # for testing
+  - pytest
+  - nbmake
+  # for building the site (jb/build.sh)
+  - jupyter-book<2
+  - sphinx-sitemap
+  - sphinxext-opengraph
+  - ghp-import

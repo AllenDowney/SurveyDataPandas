@@ -21,10 +21,10 @@ The notebook downloads its data, `gss_extract_pacs_workshop.hdf`, from the GssEx
 
 ## Testing
 
-Environment: `mamba env create -f environment.yml` (name `SurveyDataPandas`; to be added in step 1 of the refresh). Then:
+Environment: `mamba env create -f environment.yml` (name `SurveyDataPandas`). Then `make tests`, which runs:
 
 ```
-pytest --nbmake soln/01_simpson.ipynb notebooks/test_notebook.ipynb
+pytest --nbmake soln/01_simpson.ipynb notebooks/01_simpson.ipynb notebooks/test_notebook.ipynb
 ```
 
 The target environment is Google Colab's current Python and libraries.

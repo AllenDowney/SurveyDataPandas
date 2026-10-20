@@ -1,21 +1,18 @@
 PROJECT_NAME = SurveyDataPandas
-PYTHON_VERSION = 3.11
-PYTHON_INTERPRETER = python
 
 create_environment:
-	conda create -y --name $(PROJECT_NAME) python=$(PYTHON_VERSION)
-	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
+	mamba env create -f environment.yml
+	@echo ">>> environment created. Activate with:\nconda activate $(PROJECT_NAME)"
 
 delete_environment:
-	conda env remove --name $(PROJECT_NAME)
+	mamba env remove --name $(PROJECT_NAME)
 
 requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	python -m pip install -r requirements-dev.txt
 
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
 tests:
-	pytest --nbmake soln/0*.ipynb
+	pytest --nbmake soln/01_simpson.ipynb notebooks/01_simpson.ipynb notebooks/test_notebook.ipynb

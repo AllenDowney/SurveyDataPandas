@@ -19,14 +19,14 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Tags pushed (2026-10-20)
 - [x] Leftovers (Decisions): `jb/` sources committed; data copies, `.gitkeep`, `soln/01_simpson.py` deleted (the `.py` backed up to the session scratchpad)
 - [x] Inventory (below)
-- [ ] Environment: a `SurveyDataPandas` env exists (2025, from the Makefile: Python 3.11 + pip); replace with `environment.yml` in step 1
+- [x] Environment: `mamba env create -f environment.yml` (name `SurveyDataPandas`, recreated 2026-10-20; Python 3.12.15, NumPy 2.5, pandas 3.0, Matplotlib 3.11, seaborn 0.13, statsmodels 0.15, PyTables 3.11, SciPy 1.18)
 
 **1. Runs in a current environment**
-- [ ] `environment.yml`, `requirements.txt`, `requirements-dev.txt`
-- [ ] First code cell: installs what Colab lacks; the data download is already there
-- [ ] Breakage and deprecation warnings (scratch runs with warnings as errors)
-- [ ] Data URL (works; Decisions)
-- [ ] Running instructions: Colab first, then pip or mamba (now the Makefile, in `jb/index.md`)
+- [x] `environment.yml` (Python 3.12, conda-forge, Jupyter, the libraries, pytest, nbmake, the site build tools), `requirements.txt` (unpinned: numpy, pandas, matplotlib, seaborn, statsmodels, tables; scipy and jupyter dropped), `requirements-dev.txt` (adds jupyter, pytest, nbmake; black and flake8 dropped) (2026-10-20)
+- [x] First code cell: nothing to install. Colab has every library (backend-info, 2026-10-03: pandas 2.2.3, NumPy 2.1.3, Matplotlib 3.10, seaborn 0.13.2, statsmodels 0.15.0, tables 3.10.2). The notebooks already download the data if missing
+- [x] Breakage and warnings: none. The three notebooks run in scratch copies with Deprecation/Future/PendingDeprecation/User/Runtime warnings as errors. Outputs match the 2025 ones, except `gss.columns` shows `dtype='str'` (pandas 3) and a weighted resample (random). One `ConvergenceWarning` (it was there in 2025 too; Content issues)
+- [x] Data URL: kept (Decisions)
+- [x] Running instructions in `jb/index.md`: pip or mamba instead of the Makefile; the Colab links above them were already there. `Makefile` kept, updated (Decisions): `create_environment` uses `environment.yml`, `requirements` installs `requirements-dev.txt`, `tests` runs all three notebooks (3 passed, 15 s)
 
 **2. Tests and CI**
 - [ ] `pytest --nbmake` on the notebooks
@@ -89,6 +89,8 @@ Allen, 2026-10-20:
 - Commit the `jb/` sources; the copied notebook and `jb/_build/` go in `.gitignore`; the old `_build` (with the stray PyMC pages) deleted.
 - Delete the downloaded data copies (`*.hdf` ignored), `notebooks/.gitkeep`, and `soln/01_simpson.py`.
 - The stray SurveyDataPyMC pages on `gh-pages` come off at the step 6 republish, not before.
+- Data: keep downloading from `GssExtract/raw/main/data/interim/` (SurveyDataPyMC uses the same URL).
+- Makefile: keep it, updated for `environment.yml`.
 
 ### Content issues
 
@@ -96,3 +98,4 @@ Allen, 2026-10-20:
 
 1. The title cell has a three-line subtitle ("Tutorial for PyCon 2025", "Allen B. Downey"); the layout rule allows one line. Copyright says 2025 and MIT only (new rule: code MIT, text CC).
 2. The slides (Google Slides) are linked only from the site; check they match the notebook.
+3. "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.

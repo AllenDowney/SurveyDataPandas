@@ -33,35 +33,30 @@ You have two options to run the notebook:
 
 ## Running Locally
 
-If you prefer to run the notebooks on your local machine, follow these steps:
+If you prefer to run the notebooks on your own computer, clone the repository:
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/AllenDowney/SurveyDataPandas.git
-   cd SurveyDataPandas
-   ```
+```bash
+git clone https://github.com/AllenDowney/SurveyDataPandas.git
+cd SurveyDataPandas
+```
 
-2. **Set up the environment**:
-   ```bash
-   # Create a conda environment
-   make create_environment
-   
-   # Activate the environment
-   conda activate SurveyDataPandas
-   
-   # Install required packages
-   make requirements
-   ```
-If you use another environment manager, you can look in `requirements.txt` to see what packages you need.
+Then install the packages with pip:
 
-3. **Start Jupyter**:
-   ```bash
-   jupyter notebook
-   ```
+```bash
+pip install -r requirements.txt jupyter
+```
 
-4. **Open the notebook**:
-   - Navigate to the `notebooks` directory
-   - Open `test_notebook.ipynb`
+Or create a conda environment with [mamba](https://mamba.readthedocs.io/) (or conda):
+
+```bash
+mamba env create -f environment.yml
+conda activate SurveyDataPandas
+```
+
+Then start Jupyter, navigate to the `notebooks` directory, and open `test_notebook.ipynb`.
+
+```bash
+jupyter notebook
+```
 
 If the code in `test_notebook.ipynb` runs with no errors, your setup is ready to go!
-
