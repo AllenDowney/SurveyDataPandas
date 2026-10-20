@@ -43,7 +43,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Layout and license (Decisions): title cell is the H1 plus "Examples and exercises for a tutorial on survey data analysis."; `test_notebook` split (H1 + "A setup check for the tutorial.", Colab cell, then the setup paragraphs); last cell "Copyright 2025–2026 Allen Downey", code MIT, text CC BY-NC-SA 4.0 (CompStats wording); trailing empty code cell removed. Headings were already ATX, one H1, sections `##`
 
 **5. README in the standard shape**
-- [ ] README rewritten; `LICENSE` file
+- [x] README rewritten (2026-10-20): badge, author, abstract (from `jb/index.md`, pandas lowercase), companion link, level (beginner) and length (3 hours, Allen), outline, notebook table with Colab links (setup check, exercises, solutions), slides, data, recordings (none; tag `pycon-2025`), running instructions, next steps (SurveyDataPyMC, PoliticalAlignmentCaseStudy, *Think Stats*, the *Probably Overthinking It* notebooks, the hub), license. `LICENSE` file (MIT, 2025)
 
 **6. Site and visibility**
 - [ ] Rebuild the existing site (Jupyter Book in `jb/`, `gh-pages`), with `prep_notebooks.py` from the template
@@ -96,6 +96,9 @@ Allen, 2026-10-20:
 - Commits stay local for now (no push before step 2, nor after it).
 - Colab cells: the solution version opens itself and links to the version with blanks.
 - Title subtitle like CompStats; text license CC BY-NC-SA 4.0, copyright 2025–2026; `test_notebook` title cell split.
+- GSS Data Explorer links: keep them; Allen checks one in a browser (the host is up, but sends an incomplete certificate chain, so curl fails).
+- `happy` label "Happy" → "Pretty happy".
+- README: beginner, about 3 hours.
 
 ### Content issues
 
@@ -104,5 +107,5 @@ Allen, 2026-10-20:
 1. Resolved 2026-10-20 (Decisions): the title cell's three-line subtitle; copyright 2025 and MIT only.
 2. The slides (Google Slides) are linked only from the site; check they match the notebook.
 3. Resolved 2026-10-20 (explained in the text; Decisions). "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.
-4. The four "Target variable" cells start with comments linking `https://gssdataexplorer.norc.org/variables/<n>/vshow` (434 `happy`, 439 `helpful`, 440 `fair`, 441 `trust`). That host no longer resolves, and the new GSS Data Explorer has no obvious per-variable URL. Options: drop the comments, or link the GSS codebook or the NORC variable search.
-5. `happy`: the `responses` labels are "Very happy", "Happy", "Not too happy", but the GSS answer (and the `question` text) is "pretty happy".
+4. The four "Target variable" cells link `https://gssdataexplorer.norc.org/variables/<n>/vshow` (434 `happy`, 439 `helpful`, 440 `fair`, 441 `trust`). The site is up, but it is a JavaScript app, so I couldn't check that these pages still show the variables. **Allen:** open one in a browser; if it doesn't, replace the four with the Data Explorer home (Allen, 2026-10-20).
+5. Resolved 2026-10-20 (now "Pretty happy"). `happy`: the `responses` labels are "Very happy", "Happy", "Not too happy", but the GSS answer (and the `question` text) is "pretty happy".
