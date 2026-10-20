@@ -1,67 +1,64 @@
-# Survey Data with Pandas
+---
+myst:
+  html_meta:
+    description: "A beginner's tutorial on survey data in Python: explore 50 years of General Social Survey data with pandas and StatsModels, from loading to modeling."
+og:description: "A beginner's tutorial on survey data in Python: explore 50 years of General Social Survey data with pandas and StatsModels, from loading to modeling."
+---
 
-This is the landing page for a tutorial at PyCon US 2025.
+# Survey Data with Pandas: A Tutorial in Python
 
-[The slides are here](https://docs.google.com/presentation/d/e/2PACX-1vTNdX7EizUOSVLxl7yWcR627FWnnPXcydIw6_eB6mXNlBlP4AjxG0YZNvFzLzL8Muuj-tJGZI3ID551/pub)
+[Allen Downey](https://allendowney.com)
 
-Links to the notebooks and setup instructions are below.
+Survey data analysis is a cornerstone of data science, whether you're analyzing customer feedback, tracking election polls, or studying social trends. This tutorial introduces powerful tools from pandas and StatsModels for extracting meaningful insights from survey data. Using real-world examples from the [General Social Survey](https://gss.norc.org/) (GSS), we'll explore how political beliefs have evolved in the United States over the past 50 years. Through hands-on exercises, you'll master essential data science workflows: from data loading and validation to exploration, visualization, modeling, and effective communication of results.
 
-**Abstract**
+I presented this tutorial at PyCon US 2025. Its companion, [Bayesian Regression for Survey Data with PyMC](https://allendowney.github.io/SurveyDataPyMC/), uses the same GSS data.
 
-Survey data analysis is a cornerstone of data science, whether you're analyzing customer feedback, tracking election polls, or studying social trends. This tutorial introduces powerful tools from Pandas and StatsModels for extracting meaningful insights from survey data. Using real-world examples from the General Social Survey (GSS), we'll explore how political beliefs have evolved in the United States over the past 50 years. Through hands-on exercises, you'll master essential data science workflows: from data loading and validation to exploration, visualization, modeling, and effective communication of results.
+**Level:** beginner. You should be familiar with basic Python programming, fundamental data analysis concepts, and basic statistics. You don't need any experience with pandas or survey data.
 
-**Prerequisites**
+**Length:** about 3 hours.
 
-This tutorial is designed for Python users who are familiar with:
-- Basic Python programming
-- Fundamental data analysis concepts
-- Basic statistics
+## The notebook
 
-No prior experience with Pandas or survey data analysis is required.
+The page on this site shows the notebook with solutions; click on a hidden cell to see it. To do the exercises, run the version with blanks on Colab:
 
-## Run the notebook
+* [Survey data and Simpson's paradox](01_simpson): distributions, cross tabulation, time series and LOWESS, pivot tables, logistic regression, birth cohorts, Simpson's paradox, and sampling weights. [Exercises on Colab](https://colab.research.google.com/github/AllenDowney/SurveyDataPandas/blob/main/notebooks/01_simpson.ipynb)
 
-You have two options to run the notebook:
+To check your setup before the tutorial, run the [setup notebook on Colab](https://colab.research.google.com/github/AllenDowney/SurveyDataPandas/blob/main/notebooks/test_notebook.ipynb).
 
-1. **Practice Version** (Recommended for learning):
-   * [Notebook 1: Simpson's Paradox](https://colab.research.google.com/github/AllenDowney/SurveyDataPandas/blob/main/notebooks/01_simpson.ipynb)
+[Slides for this tutorial are here](https://docs.google.com/presentation/d/e/2PACX-1vTNdX7EizUOSVLxl7yWcR627FWnnPXcydIw6_eB6mXNlBlP4AjxG0YZNvFzLzL8Muuj-tJGZI3ID551/pub).
 
-2. **Solution Version** (For reference):
-   * [Notebook 1: Simpson's Paradox with solutions](https://colab.research.google.com/github/AllenDowney/SurveyDataPandas/blob/main/soln/01_simpson.ipynb)
+## Running the notebooks
 
-**Note:** The notebook uses data from the General Social Survey (GSS), which will be automatically downloaded when you run the notebook. The GSS is a nationally representative survey of adults in the United States, conducted since 1972, making it an excellent resource for studying social trends and attitudes.
+The easiest way to run the notebooks is on Colab: click one of the links above. You need a Google account, but you don't have to install anything. The notebooks download the data they need.
 
-## Running Locally
+To run them on your own computer, clone the [repository](https://github.com/AllenDowney/SurveyDataPandas):
 
-If you prefer to run the notebooks on your local machine, follow these steps:
+```bash
+git clone https://github.com/AllenDowney/SurveyDataPandas.git
+cd SurveyDataPandas
+```
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/AllenDowney/SurveyDataPandas.git
-   cd SurveyDataPandas
-   ```
+Then install the packages with pip:
 
-2. **Set up the environment**:
-   ```bash
-   # Create a conda environment
-   make create_environment
-   
-   # Activate the environment
-   conda activate SurveyDataPandas
-   
-   # Install required packages
-   make requirements
-   ```
-If you use another environment manager, you can look in `requirements.txt` to see what packages you need.
+```bash
+pip install -r requirements.txt jupyter
+```
 
-3. **Start Jupyter**:
-   ```bash
-   jupyter notebook
-   ```
+Or create a conda environment with [mamba](https://mamba.readthedocs.io/) (or conda):
 
-4. **Open the notebook**:
-   - Navigate to the `notebooks` directory
-   - Open `test_notebook.ipynb`
+```bash
+mamba env create -f environment.yml
+conda activate SurveyDataPandas
+```
 
-If the code in `test_notebook.ipynb` runs with no errors, your setup is ready to go!
+Then run `jupyter lab` and open `notebooks/test_notebook.ipynb`. If it runs with no errors, your setup is ready to go!
 
+## Next steps
+
+* [Bayesian Regression for Survey Data with PyMC](https://allendowney.github.io/SurveyDataPyMC/), the companion tutorial: logistic, categorical, and ordered logistic regression with the same GSS data.
+* [Political Alignment Case Study](https://allendowney.github.io/PoliticalAlignmentCaseStudy/): a longer project with GSS data on political views.
+* [*Think Stats*](https://allendowney.github.io/ThinkStats/), which is free online.
+* *Probably Overthinking It*, which uses GSS data in several chapters; [its companion notebooks are here](https://allendowney.github.io/ProbablyOverthinkingIt/).
+* [My other workshops](https://allendowney.github.io/#workshops).
+
+The code is available under the [MIT License](https://github.com/AllenDowney/SurveyDataPandas/blob/main/LICENSE). The text is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
