@@ -38,8 +38,9 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [ ] Allen runs one notebook on Colab end to end (needs the push first: Colab opens the notebooks from GitHub)
 
 **4. Text**
-- [ ] Typos and broken links
-- [ ] Notebook layout (title, Colab cell, copyright and license at the end) and license (code MIT, text CC)
+- [x] Typos: none found (codespell's hits are all in embedded images; markdown, comments and docstrings read) (2026-10-20)
+- [x] Links: GssExtract extract notebook `02_make_extract-2022_4.ipynb` (404) → `pacs_workshop_extract.ipynb` (renamed in GssExtract's 2026-02 "Consolidated notebooks"; it writes `gss_extract_pacs_workshop.hdf`, last changed 2025-04-23); Matplotlib `api/axes_api.html` → `stable/api/axes_api.html`. The GSS Data Explorer links are dead (Content issues)
+- [x] Layout and license (Decisions): title cell is the H1 plus "Examples and exercises for a tutorial on survey data analysis."; `test_notebook` split (H1 + "A setup check for the tutorial.", Colab cell, then the setup paragraphs); last cell "Copyright 2025–2026 Allen Downey", code MIT, text CC BY-NC-SA 4.0 (CompStats wording); trailing empty code cell removed. Headings were already ATX, one H1, sections `##`
 
 **5. README in the standard shape**
 - [ ] README rewritten; `LICENSE` file
@@ -92,12 +93,16 @@ Allen, 2026-10-20:
 - Data: keep downloading from `GssExtract/raw/main/data/interim/` (SurveyDataPyMC uses the same URL).
 - Makefile: keep it, updated for `environment.yml`.
 - 2000 cohort warning: leave the code, explain it in the text. Added to the "All the Cohorts" exercise cell: the cohort is in only two surveys, not enough to fit a quadratic, so the optimizer might not converge; the predictions for those years are still good. Student version regenerated with `remove_soln.py`.
-- Commits stay local for now (no push before step 2).
+- Commits stay local for now (no push before step 2, nor after it).
+- Colab cells: the solution version opens itself and links to the version with blanks.
+- Title subtitle like CompStats; text license CC BY-NC-SA 4.0, copyright 2025–2026; `test_notebook` title cell split.
 
 ### Content issues
 
 (For Allen to decide.)
 
-1. The title cell has a three-line subtitle ("Tutorial for PyCon 2025", "Allen B. Downey"); the layout rule allows one line. Copyright says 2025 and MIT only (new rule: code MIT, text CC).
+1. Resolved 2026-10-20 (Decisions): the title cell's three-line subtitle; copyright 2025 and MIT only.
 2. The slides (Google Slides) are linked only from the site; check they match the notebook.
 3. Resolved 2026-10-20 (explained in the text; Decisions). "All the Cohorts": the 2000 cohort (born 2000–2004) is in the GSS only in 2018 and 2022 (126 respondents), so `fit_model`'s quadratic (3 parameters, 2 distinct years) is not identified and statsmodels warns `ConvergenceWarning`. The predictions are still right at the two years, so the plot is fine, but participants see the warning. Options: stop at the 1990 cohort (`last = 1999`), fit a line for cohorts with fewer than 3 years, or leave it and say why in the text.
+4. The four "Target variable" cells start with comments linking `https://gssdataexplorer.norc.org/variables/<n>/vshow` (434 `happy`, 439 `helpful`, 440 `fair`, 441 `trust`). That host no longer resolves, and the new GSS Data Explorer has no obvious per-variable URL. Options: drop the comments, or link the GSS codebook or the NORC variable search.
+5. `happy`: the `responses` labels are "Very happy", "Happy", "Not too happy", but the GSS answer (and the `question` text) is "pretty happy".
