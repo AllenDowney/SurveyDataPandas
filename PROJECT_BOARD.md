@@ -34,7 +34,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Status badge in the README
 
 **3. Colab**
-- [ ] Colab cell after the title of each notebook (the solution notebook has one; the student notebook and `test_notebook` don't)
+- [ ] Colab cell after the title of each notebook. The solution and student versions share one cell, which opens the student version; the solution version should open itself and link to the student version. `test_notebook` has none
 - [ ] Allen runs one notebook on Colab end to end
 
 **4. Text**
